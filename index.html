@@ -550,13 +550,14 @@
             /* 修改后的历史记录按钮 - 方形折叠图标 */
             .history-btn {
                 position: absolute;
+                position: absolute;
                 top: 20px;
                 right: 20px;
                 width: 40px;
                 height: 40px;
                 border-radius: 8px;
-                background-color: var(--highlight-color);
-                color: var(--text-primary);
+                background-color: var(--primary-color);
+                color: white;
                 border: none;
                 display: flex;
                 align-items: center;
@@ -567,10 +568,7 @@
                 transition: all 0.2s;
             }
 
-            .history-btn:hover {
-                background-color: var(--separator-color);
-            }
-
+       
             .history-btn:active {
                 transform: scale(0.95);
             }
@@ -685,6 +683,7 @@
 
                 .history-btn {
                     top: 20px;
+                    right: 20px;
                     right: 20px;
                 }
             }
