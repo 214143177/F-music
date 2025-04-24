@@ -1530,12 +1530,11 @@
                 }
             }
 
-            // 播放/暂停切换
             function togglePlay() {
                 if (playerState.currentSongIndex === -1 && playerState.songs.length > 0) {
                     // 如果没有当前歌曲但有歌曲列表，播放第一首
                     playerState.currentSongIndex = 0;
-                    playSong(0);
+                    playSong(0);  // 直接调用playSong而不是只设置index
                     return;
                 }
 
