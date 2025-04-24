@@ -238,14 +238,14 @@
             .volume-slider {
                 width: 150px;
                 height: 4px;
-                -webkit-appearance: none;
+                /* -webkit-appearance: none; */
                 background-color: var(--separator-color);
                 border-radius: 2px;
                 outline: none;
             }
 
             .volume-slider::-webkit-slider-thumb {
-                -webkit-appearance: none;
+                /* -webkit-appearance: none; */
                 width: 14px;
                 height: 14px;
                 background: var(--primary-color);
@@ -860,6 +860,8 @@
 
     <body>
         <div class="player-container">
+           
+
             <div class="card">
                 <div class="player-header">
                     <h1>播放器-F先生</h1>
@@ -1344,7 +1346,7 @@
 
                 // 点击其他地方关闭排序选项和历史面板
                 document.addEventListener('click', (e) => {
-                    if (!sortBtn.contains(e.target) {
+                    if (!sortBtn.contains(e.target)) {
                         sortOptions.classList.remove('show');
                     }
 
