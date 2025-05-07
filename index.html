@@ -56,6 +56,7 @@
                 flex: 1;
                 overflow: hidden;
                 position: relative;
+                padding-bottom: 60px;
             }
 
             .view {
@@ -76,21 +77,30 @@
 
             /* 播放器视图 */
             .player-view {
-                padding: 20px;
+                padding: 0;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             /* iOS风格卡片 */
             .card {
+                height: 100%;
                 background-color: var(--card-color);
                 border-radius: 12px;
-                padding: 20px;
-                margin-bottom: 16px;
+                padding: 15px;
+                /* 减少内边距 */
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+                /* 允许内容滚动 */
+                -webkit-overflow-scrolling: touch;
+                /* iOS平滑滚动 */
             }
 
             .player-header {
                 text-align: center;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
             }
 
             .player-header h1 {
@@ -100,9 +110,12 @@
             }
 
             .cover-container {
-                width: 280px;
-                height: 280px;
-                margin: 0 auto 25px;
+                width: 180px;
+                /* 减小尺寸 */
+                height: 180px;
+                /* 减小尺寸 */
+                margin: 0 auto 15px;
+                /* 减少下边距 */
                 border-radius: 8px;
                 overflow: hidden;
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -129,11 +142,12 @@
 
             .song-info {
                 text-align: center;
-                margin-bottom: 25px;
+                margin-bottom: 15px;
+                /* 减少下边距 */
             }
 
             .song-title {
-                font-size: 22px;
+                font-size: 20px;
                 font-weight: 600;
                 margin-bottom: 4px;
             }
@@ -196,7 +210,8 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin: 25px 0;
+                margin: 15px 0;
+                /* 减少上下边距 */
             }
 
             .control-btn {
@@ -221,11 +236,12 @@
             }
 
             .play-btn {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 background-color: var(--primary-color);
                 color: white;
-                font-size: 28px;
+                font-size: 24px;
+
             }
 
             .play-btn:active {
@@ -237,7 +253,12 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-top: 20px;
+                margin-top: 15px;
+                /* 减少上边距 */
+                margin-bottom: 10px;
+                /* 添加下边距 */
+                padding: 0 10px;
+                /* 添加左右内边距 */
             }
 
             .volume-icon {
@@ -556,8 +577,10 @@
             .play-mode-container {
                 display: flex;
                 justify-content: center;
-                margin-top: 15px;
-                gap: 10px;
+                margin-top: 10px;
+                /* 减少上边距 */
+                gap: 8px;
+                /* 减小按钮间距 */
             }
 
             /* 底部导航栏 */
@@ -702,10 +725,33 @@
                 display: none;
             }
 
-            @media (max-width: 768px) {
+            @media (max-width: 480px) {
                 .cover-container {
-                    width: 240px;
-                    height: 240px;
+                    width: 150px;
+                    height: 150px;
+                }
+
+                .song-title {
+                    font-size: 18px;
+                }
+
+                .song-artist {
+                    font-size: 14px;
+                }
+
+                .control-btn {
+                    width: 45px;
+                    height: 45px;
+                    margin: 0 10px;
+                }
+
+                .play-btn {
+                    width: 50px;
+                    height: 50px;
+                }
+
+                .volume-slider {
+                    width: 120px;
                 }
             }
         </style>
