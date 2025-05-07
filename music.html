@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<<<<<<< HEAD
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="F先生的音乐播放器，支持多种音频格式，具有播放、暂停、上一曲、下一曲等功能。">
-    <meta name="author" content="F先生">
-    <meta name="keywords" content="音乐播放器, 音乐, 播放器, F先生, HTML, CSS, JavaScript">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>F音乐播放器</title>
-    <style>
-        :root {
-            --primary-color: #e0e5ec;
-=======
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,15 +7,11 @@
     <style>
         :root {
             --primary-color: #e5e5e5;
->>>>>>> 06d9eb5 (更改了标题)
             --shadow-light: rgba(255, 255, 255, 0.5);
             --shadow-dark: rgba(163, 177, 198, 0.5);
             --accent-color: #6a7efc;
             --text-color: #4d4d4d;
-<<<<<<< HEAD
-=======
             --tab-active-bg: rgba(106, 126, 252, 0.1);
->>>>>>> 06d9eb5 (更改了标题)
         }
 
         * {
@@ -47,20 +29,6 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-<<<<<<< HEAD
-        }
-
-        .player-container {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow:
-                9px 9px 16px var(--shadow-dark),
-                -9px -9px 16px var(--shadow-light);
-            position: relative;
-            overflow: hidden;
-=======
             flex-direction: column;
         }
 
@@ -142,7 +110,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
->>>>>>> 06d9eb5 (更改了标题)
         }
 
         .player-header {
@@ -167,11 +134,7 @@
             margin: 0 auto 25px;
             border-radius: 15px;
             overflow: hidden;
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 8px 8px 15px var(--shadow-dark),
                 -8px -8px 15px var(--shadow-light);
             position: relative;
@@ -208,11 +171,7 @@
             border-radius: 10px;
             margin-bottom: 20px;
             cursor: pointer;
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 inset 3px 3px 5px var(--shadow-dark),
                 inset -3px -3px 5px var(--shadow-light);
         }
@@ -268,11 +227,7 @@
             align-items: center;
             margin: 0 10px;
             cursor: pointer;
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 5px 5px 10px var(--shadow-dark),
                 -5px -5px 10px var(--shadow-light);
             transition: all 0.2s;
@@ -282,11 +237,7 @@
         }
 
         .control-btn:active {
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 inset 3px 3px 5px var(--shadow-dark),
                 inset -3px -3px 5px var(--shadow-light);
         }
@@ -300,22 +251,14 @@
             height: 60px;
             background-color: var(--accent-color);
             color: white;
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 5px 5px 10px var(--shadow-dark),
                 -5px -5px 10px var(--shadow-light),
                 inset 2px 2px 5px rgba(255, 255, 255, 0.3);
         }
 
         .play-btn:active {
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 inset 3px 3px 5px rgba(0, 0, 0, 0.2),
                 inset -3px -3px 5px rgba(255, 255, 255, 0.2);
         }
@@ -324,10 +267,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-<<<<<<< HEAD
-=======
             width: 100%;
->>>>>>> 06d9eb5 (更改了标题)
         }
 
         .volume-icon {
@@ -341,11 +281,7 @@
             background-color: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
             cursor: pointer;
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 inset 2px 2px 4px var(--shadow-dark),
                 inset -2px -2px 4px var(--shadow-light);
             appearance: none;
@@ -360,10 +296,6 @@
             cursor: pointer;
         }
 
-<<<<<<< HEAD
-        .playlist {
-            max-height: 200px;
-=======
         /* 播放列表面板 */
         .playlist-panel {
             height: 400px;
@@ -384,7 +316,6 @@
 
         .playlist {
             flex-grow: 1;
->>>>>>> 06d9eb5 (更改了标题)
             overflow-y: auto;
             padding-right: 10px;
         }
@@ -397,11 +328,7 @@
             margin-bottom: 10px;
             cursor: pointer;
             transition: all 0.2s;
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 3px 3px 6px var(--shadow-dark),
                 -3px -3px 6px var(--shadow-light);
         }
@@ -413,11 +340,7 @@
         .playlist-item.active {
             background-color: var(--accent-color);
             color: white;
-<<<<<<< HEAD
-            box-shadow:
-=======
             box-shadow: 
->>>>>>> 06d9eb5 (更改了标题)
                 inset 3px 3px 5px rgba(0, 0, 0, 0.2),
                 inset -3px -3px 5px rgba(255, 255, 255, 0.2);
         }
@@ -480,10 +403,6 @@
             from {
                 transform: rotate(0deg);
             }
-<<<<<<< HEAD
-
-=======
->>>>>>> 06d9eb5 (更改了标题)
             to {
                 transform: rotate(360deg);
             }
@@ -498,13 +417,6 @@
         }
 
         /* 响应式设计 */
-<<<<<<< HEAD
-        @media (max-width: 480px) {
-            .player-container {
-                padding: 20px;
-            }
-
-=======
         @media (max-width: 600px) {
             .container {
                 width: 100%;
@@ -515,95 +427,30 @@
                 padding: 20px;
             }
             
->>>>>>> 06d9eb5 (更改了标题)
             .album-art {
                 width: 180px;
                 height: 180px;
             }
-<<<<<<< HEAD
-
-=======
             
->>>>>>> 06d9eb5 (更改了标题)
             .control-btn {
                 width: 45px;
                 height: 45px;
                 margin: 0 8px;
             }
-<<<<<<< HEAD
-
-=======
             
->>>>>>> 06d9eb5 (更改了标题)
             .play-btn {
                 width: 55px;
                 height: 55px;
             }
-<<<<<<< HEAD
-=======
             
             .tab-btn {
                 padding: 10px 20px;
                 font-size: 14px;
             }
->>>>>>> 06d9eb5 (更改了标题)
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<<<<<<< HEAD
-
-<body>
-    <div class="player-container">
-        <div class="player-header">
-            <h1>F音乐播放器</h1>
-            <p>享受你的音乐时光</p>
-        </div>
-
-        <div class="album-art">
-            <img src="https://picsum.photos/400/400" alt="Album Art" id="albumArt">
-        </div>
-
-        <div class="song-info">
-            <h2 id="songTitle">歌曲名称</h2>
-            <p id="songArtist">艺术家</p>
-        </div>
-
-        <div class="progress-container" id="progressContainer">
-            <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <div class="time-info">
-            <span id="currentTime">0:00</span>
-            <span id="duration">0:00</span>
-        </div>
-
-        <div class="controls">
-            <button class="control-btn" id="shuffleBtn" title="随机播放">
-                <i class="fas fa-random"></i>
-            </button>
-            <button class="control-btn" id="prevBtn" title="上一曲">
-                <i class="fas fa-step-backward"></i>
-            </button>
-            <button class="control-btn play-btn" id="playBtn" title="播放/暂停">
-                <i class="fas fa-play" id="playIcon"></i>
-            </button>
-            <button class="control-btn" id="nextBtn" title="下一曲">
-                <i class="fas fa-step-forward"></i>
-            </button>
-            <button class="control-btn" id="repeatBtn" title="循环播放">
-                <i class="fas fa-redo"></i>
-            </button>
-        </div>
-
-        <div class="volume-container">
-            <i class="fas fa-volume-up volume-icon"></i>
-            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
-        </div>
-
-        <div class="playlist" id="playlist">
-            <!-- 播放列表将通过JavaScript动态生成 -->
-=======
 <body>
     <div class="container">
         <!-- 标签页导航 -->
@@ -673,76 +520,11 @@
                     <!-- 播放列表将通过JavaScript动态生成 -->
                 </div>
             </div>
->>>>>>> 06d9eb5 (更改了标题)
         </div>
     </div>
 
     <script>
-<<<<<<< HEAD
-        document.addEventListener('DOMContentLoaded', function () {
-            // 音乐数据
-            const songs = [
-                {
-                    title: "Blinding Lights",
-                    artist: "The Weeknd",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-                    cover: "https://picsum.photos/200/200?random=1",
-                    duration: "3:20"
-                },
-                {
-                    title: "Save Your Tears",
-                    artist: "The Weeknd",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-                    cover: "https://picsum.photos/200/200?random=2",
-                    duration: "3:35"
-                },
-                {
-                    title: "Levitating",
-                    artist: "Dua Lipa",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-                    cover: "https://picsum.photos/200/200?random=3",
-                    duration: "3:23"
-                },
-                {
-                    title: "Stay",
-                    artist: "The Kid LAROI, Justin Bieber",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-                    cover: "https://picsum.photos/200/200?random=4",
-                    duration: "2:21"
-                },
-                {
-                    title: "Good 4 U",
-                    artist: "Olivia Rodrigo",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
-                    cover: "https://picsum.photos/200/200?random=5",
-                    duration: "2:58"
-                },
-                {
-                    title: "Montero",
-                    artist: "Lil Nas X",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
-                    cover: "https://picsum.photos/200/200?random=6",
-                    duration: "2:17"
-                },
-                {
-                    title: "Peaches",
-                    artist: "Justin Bieber",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
-                    cover: "https://picsum.photos/200/200?random=7",
-                    duration: "3:18"
-                },
-                {
-                    title: "Kiss Me More",
-                    artist: "Doja Cat ft. SZA",
-                    src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
-                    cover: "https://picsum.photos/200/200?random=8",
-                    duration: "3:28"
-                }
-            ];
-
-=======
         document.addEventListener('DOMContentLoaded', function() {
->>>>>>> 06d9eb5 (更改了标题)
             // DOM元素
             const albumArt = document.getElementById('albumArt');
             const songTitle = document.getElementById('songTitle');
@@ -759,11 +541,8 @@
             const playlist = document.getElementById('playlist');
             const shuffleBtn = document.getElementById('shuffleBtn');
             const repeatBtn = document.getElementById('repeatBtn');
-<<<<<<< HEAD
-=======
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
->>>>>>> 06d9eb5 (更改了标题)
 
             // 音频对象
             const audio = new Audio();
@@ -771,19 +550,6 @@
             let currentSongIndex = 0;
             let isShuffle = false;
             let isRepeat = false;
-<<<<<<< HEAD
-            let originalPlaylist = [...songs]; // 保存原始播放列表用于取消随机播放
-
-            // 初始化播放器
-            function initPlayer() {
-                loadSong(currentSongIndex);
-                renderPlaylist();
-                updateActiveSong();
-
-                // 设置音量
-                audio.volume = volumeSlider.value;
-
-=======
             let songs = []; // 将从API获取的歌曲列表
             let originalPlaylist = []; // 保存原始播放列表顺序
 
@@ -798,7 +564,6 @@
                 // 设置音量
                 audio.volume = volumeSlider.value;
                 
->>>>>>> 06d9eb5 (更改了标题)
                 // 事件监听器
                 playBtn.addEventListener('click', togglePlay);
                 prevBtn.addEventListener('click', prevSong);
@@ -810,24 +575,16 @@
                 audio.addEventListener('loadedmetadata', updateDuration);
                 shuffleBtn.addEventListener('click', toggleShuffle);
                 repeatBtn.addEventListener('click', toggleRepeat);
-<<<<<<< HEAD
-
-=======
                 
                 // 标签页切换
                 tabBtns.forEach(btn => {
                     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
                 });
                 
->>>>>>> 06d9eb5 (更改了标题)
                 // 键盘快捷键
                 document.addEventListener('keydown', handleKeyPress);
             }
 
-<<<<<<< HEAD
-            // 加载歌曲
-            function loadSong(index) {
-=======
             // 从API获取歌曲
             async function fetchSongs() {
                 try {
@@ -923,26 +680,17 @@
             function loadSong(index) {
                 if (!songs || songs.length === 0) return;
                 
->>>>>>> 06d9eb5 (更改了标题)
                 const song = songs[index];
                 audio.src = song.src;
                 albumArt.src = song.cover;
                 songTitle.textContent = song.title;
                 songArtist.textContent = song.artist;
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 06d9eb5 (更改了标题)
                 // 重置旋转动画
                 albumArt.classList.remove('rotate', 'paused');
                 void albumArt.offsetWidth; // 触发重绘
                 albumArt.classList.add('rotate');
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 06d9eb5 (更改了标题)
                 if (!isPlaying) {
                     albumArt.classList.add('paused');
                 }
@@ -950,11 +698,8 @@
 
             // 渲染播放列表
             function renderPlaylist() {
-<<<<<<< HEAD
-=======
                 if (!songs || songs.length === 0) return;
                 
->>>>>>> 06d9eb5 (更改了标题)
                 playlist.innerHTML = '';
                 songs.forEach((song, index) => {
                     const playlistItem = document.createElement('div');
@@ -979,11 +724,8 @@
                 loadSong(currentSongIndex);
                 playSong();
                 updateActiveSong();
-<<<<<<< HEAD
-=======
                 // 切换回播放器标签页
                 switchTab('player-tab');
->>>>>>> 06d9eb5 (更改了标题)
             }
 
             // 更新活动歌曲样式
@@ -996,15 +738,6 @@
                         item.classList.remove('active');
                     }
                 });
-<<<<<<< HEAD
-
-                // 滚动到活动歌曲
-                const activeItem = playlistItems[currentSongIndex];
-                if (activeItem) {
-                    activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
-=======
->>>>>>> 06d9eb5 (更改了标题)
             }
 
             // 播放歌曲
@@ -1083,11 +816,7 @@
                 const { duration, currentTime } = audio;
                 const progressPercent = (currentTime / duration) * 100;
                 progressBar.style.width = `${progressPercent}%`;
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 06d9eb5 (更改了标题)
                 // 更新时间显示
                 currentTimeEl.textContent = formatTime(currentTime);
             }
@@ -1108,11 +837,7 @@
             // 格式化时间 (秒 -> MM:SS)
             function formatTime(seconds) {
                 if (isNaN(seconds)) return '0:00';
-<<<<<<< HEAD
-
-=======
                 
->>>>>>> 06d9eb5 (更改了标题)
                 const minutes = Math.floor(seconds / 60);
                 const secs = Math.floor(seconds % 60);
                 return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
@@ -1127,39 +852,6 @@
             function toggleShuffle() {
                 isShuffle = !isShuffle;
                 shuffleBtn.classList.toggle('active', isShuffle);
-<<<<<<< HEAD
-
-                if (isShuffle) {
-                    // 保存原始播放列表
-                    originalPlaylist = [...songs];
-
-                    // 创建随机播放列表 (排除当前正在播放的歌曲)
-                    let shuffledSongs = [...songs];
-                    const currentSong = shuffledSongs.splice(currentSongIndex, 1)[0];
-
-                    // Fisher-Yates 洗牌算法
-                    for (let i = shuffledSongs.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [shuffledSongs[i], shuffledSongs[j]] = [shuffledSongs[j], shuffledSongs[i]];
-                    }
-
-                    // 将当前歌曲放在第一位
-                    shuffledSongs.unshift(currentSong);
-                    songs.splice(0, songs.length, ...shuffledSongs);
-
-                    // 更新当前索引
-                    currentSongIndex = 0;
-                } else {
-                    // 恢复原始播放列表
-                    songs.splice(0, songs.length, ...originalPlaylist);
-
-                    // 找到当前歌曲在新列表中的位置
-                    const currentSongTitle = songTitle.textContent;
-                    currentSongIndex = songs.findIndex(song => song.title === currentSongTitle);
-                    if (currentSongIndex === -1) currentSongIndex = 0;
-                }
-
-=======
                 
                 if (isShuffle) {
                     // Fisher-Yates 洗牌算法
@@ -1180,7 +872,6 @@
                     if (currentSongIndex === -1) currentSongIndex = 0;
                 }
                 
->>>>>>> 06d9eb5 (更改了标题)
                 renderPlaylist();
                 updateActiveSong();
             }
@@ -1191,8 +882,6 @@
                 repeatBtn.classList.toggle('active', isRepeat);
             }
 
-<<<<<<< HEAD
-=======
             // 切换标签页
             function switchTab(tabId) {
                 tabBtns.forEach(btn => {
@@ -1204,7 +893,6 @@
                 });
             }
 
->>>>>>> 06d9eb5 (更改了标题)
             // 键盘快捷键
             function handleKeyPress(e) {
                 switch (e.code) {
@@ -1238,15 +926,12 @@
                     case 'KeyN':
                         nextSong();
                         break;
-<<<<<<< HEAD
-=======
                     case 'Digit1':
                         switchTab('player-tab');
                         break;
                     case 'Digit2':
                         switchTab('playlist-tab');
                         break;
->>>>>>> 06d9eb5 (更改了标题)
                 }
             }
 
@@ -1255,8 +940,4 @@
         });
     </script>
 </body>
-<<<<<<< HEAD
-
-=======
->>>>>>> 06d9eb5 (更改了标题)
 </html>
