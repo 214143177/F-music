@@ -95,7 +95,6 @@
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
                 padding-bottom: 80px;
-                /* 为底部控件留出空间 */
             }
 
             .player-header {
@@ -317,6 +316,7 @@
             .playlist {
                 list-style: none;
                 padding: 0;
+                position: relative;
             }
 
             .playlist-item {
@@ -327,7 +327,9 @@
                 border-bottom: 0.5px solid var(--separator-color);
                 cursor: pointer;
                 transition: background-color 0.2s;
-                position: relative;
+                position: absolute;
+                width: 100%;
+                box-sizing: border-box;
             }
 
             .playlist-item:active {
@@ -439,6 +441,11 @@
                 text-align: center;
                 color: var(--text-secondary);
                 padding: 60px 20px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
             }
 
             .empty-playlist i {
@@ -1147,7 +1154,11 @@
                     sleepTimeout: null,
                     imageCache: new Map(), // 图片缓存
                     lyrics: [], // 歌词数组
-                    currentLyricIndex: -1 // 当前歌词行索引
+                    currentLyricIndex: -1, // 当前歌词行索引
+                    visibleItems: [], // 当前可见的列表项
+                    itemHeight: 60, // 每个列表项的高度
+                    scrollTop: 0, // 当前滚动位置
+                    viewportHeight: 0 // 可视区域高度
                 };
 
                 // 初始化播放器
@@ -1161,14 +1172,35 @@
                     // 更新播放模式按钮状态
                     updatePlayModeButtons();
 
-                    // 渲染播放列表
-                    renderPlaylist();
+                    // 初始化虚拟滚动
+                    initVirtualScroll();
 
                     // 尝试从本地存储加载状态
                     loadPlayerState();
 
                     // 初始化歌词滚动效果
                     updateLyricsScroll();
+                }
+
+                // 初始化虚拟滚动
+                function initVirtualScroll() {
+                    // 计算可视区域高度
+                    updateViewportDimensions();
+
+                    // 监听窗口大小变化
+                    window.addEventListener('resize', updateViewportDimensions);
+
+                    // 监听滚动事件
+                    playlistView.addEventListener('scroll', () => {
+                        playerState.scrollTop = playlistView.scrollTop;
+                        renderVisibleItems();
+                    });
+                }
+
+                // 更新可视区域尺寸
+                function updateViewportDimensions() {
+                    playerState.viewportHeight = playlistView.clientHeight;
+                    renderVisibleItems();
                 }
 
                 // 从本地存储加载播放器状态
@@ -1336,7 +1368,7 @@
                         if (song) {
                             song.duration = playerState.audioElement.duration;
                             durationEl.textContent = formatTime(song.duration);
-                            renderPlaylist();
+                            renderVisibleItems();
                         }
                     });
                     playerState.audioElement.addEventListener('play', () => {
@@ -1506,7 +1538,7 @@
 
                     if (!query) {
                         playerState.filteredSongs = null;
-                        renderPlaylist();
+                        renderVisibleItems();
                         return;
                     }
 
@@ -1515,7 +1547,7 @@
                         song.artist.toLowerCase().includes(query)
                     );
 
-                    renderPlaylist();
+                    renderVisibleItems();
                 }
 
                 // 获取当前歌曲
@@ -1540,6 +1572,13 @@
                             tab.classList.add('active');
                         }
                     });
+
+                    // 如果是播放列表视图，更新虚拟滚动
+                    if (viewId === 'playlist-view') {
+                        setTimeout(() => {
+                            updateViewportDimensions();
+                        }, 100);
+                    }
                 }
 
                 // 切换排序选项显示
@@ -1573,7 +1612,7 @@
                         playerState.currentSongIndex = playerState.songs.findIndex(song => song === currentSong);
                     }
 
-                    renderPlaylist();
+                    renderVisibleItems();
                     savePlayerState();
                 }
 
@@ -1606,7 +1645,7 @@
                     coverImage.style.display = 'none';
                     defaultCover.style.display = 'flex';
 
-                    renderPlaylist();
+                    renderVisibleItems();
                     savePlayerState();
                 }
 
@@ -1721,7 +1760,7 @@
                     audio.src = song.url;
                     audio.addEventListener('loadedmetadata', () => {
                         song.duration = audio.duration;
-                        renderPlaylist();
+                        renderVisibleItems();
                     });
                     audio.addEventListener('error', () => {
                         console.error('预加载音频时长失败:', song.title);
@@ -1768,7 +1807,7 @@
                             }
 
                             // 更新UI
-                            renderPlaylist();
+                            renderVisibleItems();
                             if (playerState.currentSongIndex === playerState.songs.indexOf(song)) {
                                 updateSongInfo(song);
                             }
@@ -1816,55 +1855,73 @@
                     return window.btoa(binary);
                 }
 
-                // 渲染播放列表
-                function renderPlaylist() {
+                // 渲染可见的播放列表项
+                function renderVisibleItems() {
                     const songsToRender = playerState.filteredSongs || playerState.songs;
 
                     if (songsToRender.length === 0) {
                         playlistEl.innerHTML = `
-                    <div class="empty-playlist">
-                        <i class="fas fa-music"></i>
-                        <p>${ playerState.filteredSongs ? '没有找到匹配的歌曲' : '暂无歌曲' }</p>
-                        <button id="add-music-empty-btn"><i class="fas fa-plus"></i> 添加音乐</button>
-                    </div>
-                `;
+                        <div class="empty-playlist">
+                            <i class="fas fa-music"></i>
+                            <p>${ playerState.filteredSongs ? '没有找到匹配的歌曲' : '暂无歌曲' }</p>
+                            <button id="add-music-empty-btn"><i class="fas fa-plus"></i> 添加音乐</button>
+                        </div>
+                    `;
                         document.getElementById('add-music-empty-btn').addEventListener('click', () => fileInput.click());
                         return;
                     }
 
+                    // 设置容器高度以保持滚动条正确
+                    playlistEl.style.height = `${ songsToRender.length * playerState.itemHeight }px`;
+
+                    // 计算可见项的起始和结束索引
+                    const startIndex = Math.floor(playerState.scrollTop / playerState.itemHeight);
+                    const endIndex = Math.min(
+                        startIndex + Math.ceil(playerState.viewportHeight / playerState.itemHeight) + 5, // 预加载5个额外项
+                        songsToRender.length
+                    );
+
+                    // 创建文档片段
                     const fragment = document.createDocumentFragment();
 
-                    songsToRender.forEach((song, index) => {
+                    // 渲染可见项
+                    for (let i = startIndex; i < endIndex; i++) {
+                        const song = songsToRender[i];
                         const originalIndex = playerState.songs.indexOf(song);
                         const li = document.createElement('li');
                         li.className = `playlist-item ${ originalIndex === playerState.currentSongIndex ? 'active' : '' }`;
                         li.setAttribute('draggable', 'true');
+                        li.style.top = `${ i * playerState.itemHeight }px`;
                         li.addEventListener('click', () => {
                             playSong(originalIndex);
                             switchView('player-view');
                         });
 
                         li.innerHTML = `
-                    <div class="playlist-item-drag-handle">
-                        <i class="fas fa-grip-lines"></i>
-                    </div>
-                    <div class="playlist-item-cover">
-                        ${ song.cover ? `<img src="${ song.cover }" alt="封面" loading="lazy">` : '<i class="fas fa-music"></i>' }
-                    </div>
-                    <div class="playlist-item-info">
-                        <div class="playlist-item-title">${ song.title }</div>
-                        <div class="playlist-item-artist">${ song.artist }</div>
-                    </div>
-                    <div class="playlist-item-duration">${ formatTime(song.duration) }</div>
-                    <button class="playlist-item-delete" data-index="${ originalIndex }" title="删除">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                `;
+                        <div class="playlist-item-drag-handle">
+                            <i class="fas fa-grip-lines"></i>
+                        </div>
+                        <div class="playlist-item-cover">
+                            ${ song.cover ? `<img src="${ song.cover }" alt="封面" loading="lazy">` : '<i class="fas fa-music"></i>' }
+                        </div>
+                        <div class="playlist-item-info">
+                            <div class="playlist-item-title">${ song.title }</div>
+                            <div class="playlist-item-artist">${ song.artist }</div>
+                        </div>
+                        <div class="playlist-item-duration">${ formatTime(song.duration) }</div>
+                        <button class="playlist-item-delete" data-index="${ originalIndex }" title="删除">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
 
                         fragment.appendChild(li);
-                    });
+                    }
 
-                    playlistEl.innerHTML = '';
+                    // 清除现有项
+                    const existingItems = playlistEl.querySelectorAll('.playlist-item');
+                    existingItems.forEach(item => item.remove());
+
+                    // 添加新项
                     playlistEl.appendChild(fragment);
 
                     // 添加删除按钮事件
@@ -1912,7 +1969,7 @@
                     }
 
                     playerState.songs.splice(index, 1);
-                    renderPlaylist();
+                    renderVisibleItems();
                     savePlayerState();
                 }
 
@@ -1943,7 +2000,7 @@
                             updateSongInfo(song);
 
                             // 更新播放列表高亮
-                            renderPlaylist();
+                            renderVisibleItems();
 
                             // 保存状态
                             savePlayerState();
