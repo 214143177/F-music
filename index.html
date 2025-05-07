@@ -712,14 +712,65 @@
     </head>
 
     <body>
-        <!-- 播放器容器 -->
-        <div class="player-container">
-            <div class="card">
-                <button class="history-btn" id="history-btn" title="播放历史">
-                    <i class="fas fa-history"></i>
-                </button>
-                <div class="player-header">
-                    <h1>F先生-播放器</h1>
+        <!-- 主内容区域 -->
+        <div class="main-content">
+            <!-- 播放器视图 -->
+            <div class="view player-view active" id="player-view">
+                <div class="card">
+                    <div class="player-header">
+                        <h1>F先生-播放器</h1>
+                    </div>
+                    <div class="cover-container">
+                        <div class="default-cover">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <img id="cover-image" class="cover-image" alt="专辑封面">
+                    </div>
+
+                    <div class="song-info">
+                        <div id="song-title" class="song-title">未选择歌曲</div>
+                        <div id="song-artist" class="song-artist">未知艺术家</div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <div class="time-display">
+                            <span id="current-time">00:00</span>
+                            <span id="duration">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="control-btn" id="prev-btn" title="上一曲">
+                            <i class="fas fa-backward"></i>
+                        </button>
+                        <button class="control-btn play-btn" id="play-btn" title="播放">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="next-btn" title="下一曲">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                    </div>
+
+                    <div class="play-mode-container">
+                        <button class="play-mode-btn" id="mode-list" title="列表循环">
+                            <i class="fas fa-list-ul"></i>
+                        </button>
+                        <button class="play-mode-btn" id="mode-repeat" title="单曲循环">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        <button class="play-mode-btn" id="mode-random" title="随机播放">
+                            <i class="fas fa-random"></i>
+                        </button>
+                    </div>
+
+                    <div class="volume-container">
+                        <i class="fas fa-volume-up volume-icon"></i>
+                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01"
+                            value="0.7">
+                    </div>
                 </div>
             </div>
 
@@ -775,50 +826,20 @@
             </div>
         </div>
 
-        <!-- 播放列表容器 -->
-        <div class="playlist-container">
-            <div class="playlist-header">
-                <h2>播放列表</h2>
-                <div class="playlist-actions">
-                    <button class="playlist-action-btn" id="sort-btn">
-                        <i class="fas fa-sort"></i>排序
-                    </button>
-                    <button class="playlist-action-btn delete" id="clear-btn">
-                        <i class="fas fa-trash"></i>清空
-                    </button>
-                    <button class="playlist-action-btn" id="add-music-btn">
-                        <i class="fas fa-plus"></i>添加
-                    </button>
-                </div>
-                <div class="sort-options" id="sort-options">
-                    <div class="sort-option" data-sort="title">
-                        <i class="fas fa-font"></i>按标题排序
-                    </div>
-                    <div class="sort-option" data-sort="artist">
-                        <i class="fas fa-user"></i>按艺术家排序
-                    </div>
-                    <div class="sort-option" data-sort="duration">
-                        <i class="fas fa-clock"></i>按时长排序
-                    </div>
-                    <div class="sort-option" data-sort="added">
-                        <i class="fas fa-calendar-plus"></i>按添加时间排序
-                    </div>
-                </div>
-                <input type="file" id="file-input" class="file-input" accept="audio/*" multiple>
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <div class="tab active" data-view="player-view">
+                <i class="fas fa-music"></i>
+                <span>正在播放</span>
             </div>
-        </div>
-
-        <!-- 历史记录面板 -->
-        <div class="history-panel" id="history-panel">
-            <div class="history-header">
-                <h3>播放历史</h3>
-                <button class="history-close" id="history-close">
-                    <i class="fas fa-times"></i>
-                </button>
+            <div class="tab" data-view="playlist-view">
+                <i class="fas fa-list"></i>
+                <span>播放列表</span>
             </div>
-            <ul class="history-list" id="history-list">
-                <li class="empty-history">暂无播放历史</li>
-            </ul>
+            <div class="tab" data-view="history-view">
+                <i class="fas fa-history"></i>
+                <span>历史记录</span>
+            </div>
         </div>
 
         <!-- 遮罩层 -->
