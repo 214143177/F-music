@@ -7,6 +7,7 @@
         <meta name="description" content="F先生的音乐播放器，支持多种音频格式，具有播放、暂停、上一曲、下一曲等功能。">
         <meta name="author" content="F先生">
         <meta name="keywords" content="音乐播放器, 音乐, 播放器, F先生, HTML, CSS, JavaScript">
+        <meta name="theme-color" content="#007AFF">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
         <link rel="apple-touch-icon" href="icon.png">
         <title>音乐播放器-F先生</title>
@@ -84,7 +85,7 @@
 
             /* iOS风格卡片 */
             .card {
-                height: 100%;
+                min-height: 100%;
                 background-color: var(--card-color);
                 border-radius: 12px;
                 padding: 15px;
@@ -93,6 +94,8 @@
                 flex-direction: column;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                padding-bottom: 80px;
+                /* 为底部控件留出空间 */
             }
 
             .player-header {
@@ -358,6 +361,7 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                loading: lazy;
             }
 
             .playlist-item-info {
@@ -535,26 +539,6 @@
                 color: var(--text-primary);
             }
 
-            .timer-options {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            .timer-option {
-                padding: 8px 12px;
-                background-color: var(--highlight-color);
-                border-radius: 8px;
-                font-size: 14px;
-                cursor: pointer;
-                transition: all 0.2s;
-            }
-
-            .timer-option.active {
-                background-color: var(--primary-color);
-                color: white;
-            }
-
             /* 播放模式按钮 */
             .play-mode-btn {
                 background: none;
@@ -581,6 +565,31 @@
                 justify-content: center;
                 margin-top: 10px;
                 gap: 8px;
+            }
+
+            /* 定时关闭选项 */
+            .sleep-timer-container {
+                display: flex;
+                justify-content: center;
+                margin: 15px 0;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .sleep-timer-btn {
+                padding: 8px 12px;
+                background-color: var(--highlight-color);
+                border: none;
+                border-radius: 5px;
+                color: var(--text-primary);
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .sleep-timer-btn.active {
+                background-color: var(--primary-color);
+                color: white;
             }
 
             /* 底部导航栏 */
@@ -742,26 +751,85 @@
                 display: none;
             }
 
-            /* 歌词视图 */
-            .lyrics-container {
+            /* 全新的歌词样式 - 参考iOS设计 */
+            .lyrics-view {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: var(--background-color);
+                z-index: 101;
                 padding: 20px;
-                text-align: center;
-                height: calc(100% - 100px);
+                overflow: hidden;
+                flex-direction: column;
+            }
+
+            .lyrics-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .lyrics-title {
+                font-size: 18px;
+                font-weight: 600;
+            }
+
+            .lyrics-close-btn {
+                background: none;
+                border: none;
+                color: var(--primary-color);
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+            .lyrics-container {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
-                display: none;
+                padding: 20px 0;
+                text-align: center;
+                width: 100%;
             }
 
             .lyrics-line {
-                margin-bottom: 15px;
+                font-size: 22px;
+                line-height: 1.6;
+                margin: 12px 0;
                 color: var(--text-secondary);
-                transition: all 0.3s;
+                opacity: 0.6;
+                transition: all 0.3s ease;
+                width: 100%;
+                padding: 0 20px;
             }
 
             .lyrics-line.active {
-                color: var(--primary-color);
-                font-size: 18px;
-                font-weight: 500;
+                font-size: 26px;
+                font-weight: 600;
+                color: var(--text-primary);
+                opacity: 1;
+                transform: scale(1.05);
+            }
+
+            .lyrics-line.past {
+                opacity: 0.4;
+            }
+
+            .lyrics-line.future {
+                opacity: 0.4;
+            }
+
+            .lyrics-time {
+                font-size: 14px;
+                color: var(--text-secondary);
+                margin-top: 20px;
             }
 
             /* 响应式调整 */
@@ -808,6 +876,14 @@
                     width: 40px;
                     height: 40px;
                     margin-right: 12px;
+                }
+
+                .lyrics-line {
+                    font-size: 20px;
+                }
+
+                .lyrics-line.active {
+                    font-size: 24px;
                 }
             }
         </style>
@@ -868,9 +944,12 @@
                         </button>
                     </div>
 
-                    <!-- 歌词视图 -->
-                    <div class="lyrics-container" id="lyrics-container">
-                        <div class="lyrics-line">暂无歌词</div>
+                    <!-- 定时关闭选项 -->
+                    <div class="sleep-timer-container">
+                        <button class="sleep-timer-btn" data-minutes="0">关闭定时</button>
+                        <button class="sleep-timer-btn" data-minutes="15">15分钟</button>
+                        <button class="sleep-timer-btn" data-minutes="30">30分钟</button>
+                        <button class="sleep-timer-btn" data-minutes="60">60分钟</button>
                     </div>
                 </div>
             </div>
@@ -923,17 +1002,6 @@
             <!-- 我的视图 -->
             <div class="view my-view" id="my-view">
                 <div class="my-section">
-                    <h3 class="my-section-title">定时关闭</h3>
-                    <div class="timer-options">
-                        <div class="timer-option" data-minutes="0">关闭</div>
-                        <div class="timer-option" data-minutes="15">15分钟</div>
-                        <div class="timer-option" data-minutes="30">30分钟</div>
-                        <div class="timer-option" data-minutes="45">45分钟</div>
-                        <div class="timer-option" data-minutes="60">60分钟</div>
-                        <div class="timer-option" data-minutes="90">90分钟</div>
-                    </div>
-                </div>
-                <div class="my-section">
                     <h3 class="my-section-title">关于</h3>
                     <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">
                         F先生音乐播放器 v1.0<br>
@@ -941,7 +1009,30 @@
                         支持多种音频格式播放
                     </p>
                 </div>
+                <div class="my-section">
+                    <h3 class="my-section-title">使用说明</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;">
+                        1. 点击"添加"按钮导入音乐文件<br>
+                        2. 点击封面可查看歌词<br>
+                        3. 在播放器界面可设置定时关闭<br>
+                        4. 支持列表循环、单曲循环和随机播放
+                    </p>
+                </div>
             </div>
+        </div>
+
+        <!-- 歌词视图 - 全屏显示 -->
+        <div class="lyrics-view" id="lyrics-view">
+            <div class="lyrics-header">
+                <div class="lyrics-title">歌词</div>
+                <button class="lyrics-close-btn" id="lyrics-close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="lyrics-container" id="lyrics-container">
+                <!-- 歌词将通过JavaScript动态生成 -->
+            </div>
+            <div class="lyrics-time" id="lyrics-time">00:00</div>
         </div>
 
         <!-- 底部导航栏 -->
@@ -1009,9 +1100,12 @@
                 const sortBtn = document.getElementById('sort-btn');
                 const sortOptions = document.getElementById('sort-options');
                 const clearBtn = document.getElementById('clear-btn');
-                const lyricsContainer = document.getElementById('lyrics-container');
                 const searchInput = document.getElementById('search-input');
-                const timerOptions = document.querySelectorAll('.timer-option');
+                const sleepTimerBtns = document.querySelectorAll('.sleep-timer-btn');
+                const lyricsView = document.getElementById('lyrics-view');
+                const lyricsContainer = document.getElementById('lyrics-container');
+                const lyricsCloseBtn = document.getElementById('lyrics-close-btn');
+                const lyricsTimeEl = document.getElementById('lyrics-time');
 
                 // 播放模式按钮
                 const modeListBtn = document.getElementById('mode-list');
@@ -1051,7 +1145,9 @@
                     showLyrics: false,
                     sleepTimer: null,
                     sleepTimeout: null,
-                    imageCache: new Map() // 图片缓存
+                    imageCache: new Map(), // 图片缓存
+                    lyrics: [], // 歌词数组
+                    currentLyricIndex: -1 // 当前歌词行索引
                 };
 
                 // 初始化播放器
@@ -1070,6 +1166,9 @@
 
                     // 尝试从本地存储加载状态
                     loadPlayerState();
+
+                    // 初始化歌词滚动效果
+                    updateLyricsScroll();
                 }
 
                 // 从本地存储加载播放器状态
@@ -1158,8 +1257,11 @@
                     // 进度条点击
                     progressBar.addEventListener('click', seekTo);
 
-                    // 封面点击切换歌词
-                    coverContainer.addEventListener('click', toggleLyrics);
+                    // 封面点击显示歌词
+                    coverContainer.addEventListener('click', showLyricsView);
+
+                    // 歌词关闭按钮
+                    lyricsCloseBtn.addEventListener('click', hideLyricsView);
 
                     // 添加音乐按钮
                     addMusicBtn.addEventListener('click', () => fileInput.click());
@@ -1212,12 +1314,17 @@
                     // 搜索输入
                     searchInput.addEventListener('input', debounce(handleSearch, 300));
 
-                    // 定时选项
-                    timerOptions.forEach(option => {
-                        option.addEventListener('click', () => {
-                            setSleepTimer(parseInt(option.dataset.minutes));
-                            timerOptions.forEach(opt => opt.classList.remove('active'));
-                            option.classList.add('active');
+                    // 定时关闭按钮
+                    sleepTimerBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const minutes = parseInt(btn.dataset.minutes);
+                            setSleepTimer(minutes);
+
+                            // 更新按钮状态
+                            sleepTimerBtns.forEach(b => b.classList.remove('active'));
+                            if (minutes > 0) {
+                                btn.classList.add('active');
+                            }
                         });
                     });
 
@@ -1260,6 +1367,22 @@
 
                     // 处理拖拽事件
                     setupDragAndDrop();
+                }
+
+                // 显示歌词视图
+                function showLyricsView() {
+                    if (playerState.currentSongIndex === -1) {
+                        showAlert('提示', '当前没有正在播放的歌曲');
+                        return;
+                    }
+
+                    lyricsView.style.display = 'flex';
+                    updateLyrics(getCurrentSong());
+                }
+
+                // 隐藏歌词视图
+                function hideLyricsView() {
+                    lyricsView.style.display = 'none';
                 }
 
                 // 设置拖拽排序
@@ -1343,23 +1466,25 @@
                         playerState.audioElement.pause();
                         playerState.isPlaying = false;
                         playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                        showAlert('提示', '定时关闭已生效');
+                        showAlert('提示', `定时关闭已生效，已播放${ minutes }分钟`);
                     }, milliseconds);
                 }
 
-                // 切换歌词显示
-                function toggleLyrics() {
-                    playerState.showLyrics = !playerState.showLyrics;
+                // 更新歌词滚动位置
+                function updateLyricsScroll() {
+                    if (!lyricsView.style.display || lyricsView.style.display === 'none') return;
 
-                    if (playerState.showLyrics) {
-                        lyricsContainer.style.display = 'block';
-                        coverContainer.style.display = 'none';
-                        document.querySelector('.song-info').style.display = 'none';
-                    } else {
-                        lyricsContainer.style.display = 'none';
-                        coverContainer.style.display = 'block';
-                        document.querySelector('.song-info').style.display = 'block';
-                    }
+                    const lyricsLines = document.querySelectorAll('.lyrics-line');
+                    if (lyricsLines.length === 0 || playerState.currentLyricIndex === -1) return;
+
+                    const activeLine = lyricsLines[playerState.currentLyricIndex];
+                    if (!activeLine) return;
+
+                    // 滚动到当前歌词行
+                    activeLine.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
                 }
 
                 // 防抖函数
@@ -1635,6 +1760,13 @@
                                 song.cover = coverUrl;
                             }
 
+                            // 尝试获取歌词
+                            if (tag.tags.unsynchronisedLyrics) {
+                                song.lyrics = parseLyrics(tag.tags.unsynchronisedLyrics.text);
+                            } else if (tag.tags.lyrics) {
+                                song.lyrics = parseLyrics(tag.tags.lyrics.text);
+                            }
+
                             // 更新UI
                             renderPlaylist();
                             if (playerState.currentSongIndex === playerState.songs.indexOf(song)) {
@@ -1645,6 +1777,32 @@
                             console.error('ID3解析错误:', error);
                         }
                     });
+                }
+
+                // 解析歌词文本
+                function parseLyrics(lyricsText) {
+                    // 示例歌词格式：[00:00.00] 这里是歌词
+                    const lines = lyricsText.split('\n');
+                    const parsedLyrics = [];
+
+                    lines.forEach(line => {
+                        // 匹配时间标签和歌词内容
+                        const match = line.match(/^\[(\d+):(\d+)\.(\d+)\](.*)/);
+                        if (match) {
+                            const minutes = parseInt(match[1]);
+                            const seconds = parseInt(match[2]);
+                            const milliseconds = parseInt(match[3]);
+                            const text = match[4].trim();
+
+                            const time = minutes * 60 + seconds + milliseconds / 100;
+                            parsedLyrics.push({
+                                time: time,
+                                text: text
+                            });
+                        }
+                    });
+
+                    return parsedLyrics;
                 }
 
                 // 将ArrayBuffer转换为Base64
@@ -1859,9 +2017,73 @@
 
                 // 更新歌词显示
                 function updateLyrics(song) {
-                    // 这里可以添加歌词解析逻辑
-                    // 目前只是显示一个占位符
-                    lyricsContainer.innerHTML = '<div class="lyrics-line">暂无歌词</div>';
+                    // 如果有歌词数据则使用，否则使用默认歌词
+                    playerState.lyrics = song.lyrics || [
+                        { time: 0, text: "暂无歌词" },
+                        { time: 5, text: "请添加歌词文件" },
+                        { time: 10, text: "或等待歌词解析功能完善" }
+                    ];
+
+                    // 渲染歌词
+                    renderLyrics();
+
+                    // 如果歌词视图是打开的，更新当前播放的歌词行
+                    if (lyricsView.style.display === 'flex') {
+                        updateCurrentLyric();
+                    }
+                }
+
+                // 渲染歌词
+                function renderLyrics() {
+                    const lyricsHTML = playerState.lyrics.map((line, index) => {
+                        return `<div class="lyrics-line" data-time="${ line.time }">${ line.text }</div>`;
+                    }).join('');
+
+                    lyricsContainer.innerHTML = lyricsHTML;
+                }
+
+                // 更新当前播放的歌词行
+                function updateCurrentLyric() {
+                    const currentTime = playerState.audioElement.currentTime;
+                    const lyricsLines = document.querySelectorAll('.lyrics-line');
+
+                    // 找到当前应该显示的歌词行
+                    let currentIndex = -1;
+                    for (let i = 0; i < playerState.lyrics.length; i++) {
+                        if (playerState.lyrics[i].time <= currentTime) {
+                            currentIndex = i;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    // 如果没有找到合适的歌词行，显示第一行
+                    if (currentIndex === -1 && playerState.lyrics.length > 0) {
+                        currentIndex = 0;
+                    }
+
+                    // 更新歌词行状态
+                    lyricsLines.forEach((line, index) => {
+                        line.classList.remove('active', 'past', 'future');
+
+                        if (index === currentIndex) {
+                            line.classList.add('active');
+                            playerState.currentLyricIndex = index;
+                        } else if (index < currentIndex) {
+                            line.classList.add('past');
+                        } else {
+                            line.classList.add('future');
+                        }
+                    });
+
+                    // 更新歌词时间显示
+                    if (currentIndex !== -1) {
+                        const currentLine = playerState.lyrics[currentIndex];
+                        lyricsTimeEl.textContent = formatTime(currentLine.time);
+                    }
+
+                    // 滚动到当前歌词行
+                    updateLyricsScroll();
                 }
 
                 // 处理歌曲结束事件
@@ -1980,6 +2202,11 @@
                         const percent = (playerState.audioElement.currentTime / playerState.audioElement.duration) * 100;
                         progress.style.width = `${ percent }%`;
                         currentTimeEl.textContent = formatTime(playerState.audioElement.currentTime);
+
+                        // 更新歌词显示
+                        if (lyricsView.style.display === 'flex') {
+                            updateCurrentLyric();
+                        }
                     }
                 }
 
