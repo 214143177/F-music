@@ -46,27 +46,37 @@
             body {
                 background-color: var(--background-color);
                 color: var(--text-primary);
-                display: flex;
                 height: 100vh;
+                display: flex;
+                flex-direction: column;
                 overflow: hidden;
             }
 
-            .player-container {
-                width: 55%;
-                height: 100%;
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                background-color: var(--background-color);
+            .main-content {
+                flex: 1;
+                overflow: hidden;
                 position: relative;
             }
 
-            .playlist-container {
-                width: 45%;
-                height: 100%;
+            .view {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
                 overflow-y: auto;
-                background-color: var(--card-color);
-                border-left: 0.5px solid var(--separator-color);
+                display: none;
+                padding-bottom: 60px;
+                /* 为底部导航栏留出空间 */
+            }
+
+            .view.active {
+                display: block;
+            }
+
+            /* 播放器视图 */
+            .player-view {
+                padding: 20px;
             }
 
             /* iOS风格卡片 */
@@ -76,10 +86,6 @@
                 padding: 20px;
                 margin-bottom: 16px;
                 box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                position: relative;
             }
 
             .player-header {
@@ -254,6 +260,11 @@
                 background: var(--primary-color);
                 border-radius: 50%;
                 cursor: pointer;
+            }
+
+            /* 播放列表视图 */
+            .playlist-view {
+                padding: 0;
             }
 
             /* 播放列表样式 */
@@ -466,55 +477,18 @@
                 color: var(--primary-color);
             }
 
-            /* 历史记录面板 */
-            .history-panel {
-                display: none;
-                position: fixed;
-                top: 80px;
-                left: 20px;
-                width: 300px;
-                max-height: 400px;
-                background-color: var(--card-color);
-                border-radius: 12px;
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-                z-index: 100;
-                overflow: hidden;
-            }
-
-            .history-panel.show {
-                display: block;
-            }
-
-            .history-header {
-                padding: 16px;
-                border-bottom: 0.5px solid var(--separator-color);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .history-header h3 {
-                font-size: 16px;
-                font-weight: 600;
-            }
-
-            .history-close {
-                background: none;
-                border: none;
-                color: var(--text-secondary);
-                font-size: 16px;
-                cursor: pointer;
+            /* 历史记录视图 */
+            .history-view {
+                padding: 0;
             }
 
             .history-list {
-                max-height: 340px;
-                overflow-y: auto;
                 list-style: none;
-                padding: 1;
+                padding: 0;
             }
 
             .history-item {
-                padding: 12px 16px;
+                padding: 12px 20px;
                 border-bottom: 0.5px solid var(--separator-color);
                 cursor: pointer;
                 transition: background-color 0.2s;
@@ -553,41 +527,71 @@
                 margin-left: 10px;
             }
 
-            /* 修改后的历史记录按钮 - 方形折叠图标 */
-            .history-btn {
-                position: absolute;
-                position: absolute;
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                width: 50px;
-                height: 30px;
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                width: 50px;
-                height: 30px;
-                border-radius: 8px;
-                background-color: var(--primary-color);
-                color: white;
-                background-color: var(--primary-color);
-                color: white;
-                background-color: var(--primary-color);
-                color: white;
+            .empty-history {
+                text-align: center;
+                color: var(--text-secondary);
+                padding: 60px 20px;
+            }
+
+            /* 播放模式按钮 */
+            .play-mode-btn {
+                background: none;
                 border: none;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                z-index: 99;
+                color: var(--text-secondary);
                 font-size: 16px;
+                cursor: pointer;
+                padding: 8px 12px;
+                border-radius: 5px;
                 transition: all 0.2s;
             }
 
+            .play-mode-btn:active {
+                background-color: var(--highlight-color);
+            }
 
+            .play-mode-btn.active {
+                color: var(--primary-color);
+            }
 
-            .history-btn:active {
-                transform: scale(0.95);
+            .play-mode-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 15px;
+                gap: 10px;
+            }
+
+            /* 底部导航栏 */
+            .tab-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 60px;
+                background-color: var(--card-color);
+                display: flex;
+                border-top: 0.5px solid var(--separator-color);
+                z-index: 100;
+            }
+
+            .tab {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-secondary);
+                font-size: 12px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .tab.active {
+                color: var(--primary-color);
+            }
+
+            .tab i {
+                font-size: 22px;
+                margin-bottom: 4px;
             }
 
             /* iOS风格弹窗 */
@@ -634,6 +638,59 @@
                 opacity: 0.8;
             }
 
+            /* 确认弹窗 */
+            .confirm {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: var(--card-color);
+                border-radius: 13px;
+                padding: 20px;
+                width: 270px;
+                text-align: center;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                z-index: 100;
+                display: none;
+            }
+
+            .confirm-title {
+                font-size: 17px;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+
+            .confirm-message {
+                font-size: 13px;
+                color: var(--text-secondary);
+                margin-bottom: 20px;
+            }
+
+            .confirm-buttons {
+                display: flex;
+                gap: 10px;
+            }
+
+            .confirm-button {
+                flex: 1;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                font-size: 17px;
+                font-weight: 400;
+                cursor: pointer;
+            }
+
+            .confirm-button.cancel {
+                background-color: var(--separator-color);
+                color: var(--text-primary);
+            }
+
+            .confirm-button.ok {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
             .overlay {
                 position: fixed;
                 top: 0;
@@ -645,65 +702,10 @@
                 display: none;
             }
 
-            /* 播放模式按钮 */
-            .play-mode-btn {
-                background: none;
-                border: none;
-                color: var(--text-secondary);
-                font-size: 16px;
-                cursor: pointer;
-                padding: 8px 12px;
-                border-radius: 5px;
-                transition: all 0.2s;
-            }
-
-            .play-mode-btn:active {
-                background-color: var(--highlight-color);
-            }
-
-            .play-mode-btn.active {
-                color: var(--primary-color);
-            }
-
-            .play-mode-container {
-                display: flex;
-                justify-content: center;
-                margin-top: 15px;
-                gap: 10px;
-            }
-
             @media (max-width: 768px) {
-                body {
-                    flex-direction: column;
-                    height: auto;
-                    overflow: auto;
-                }
-
-                .player-container,
-                .playlist-container {
-                    width: 100%;
-                    height: auto;
-                }
-
                 .cover-container {
                     width: 240px;
                     height: 240px;
-                }
-
-                .history-panel {
-                    width: calc(100% - 40px);
-                    left: 20px;
-                    right: 20px;
-                    bottom: auto;
-                    top: 100px;
-                }
-
-                .history-btn {
-                    top: 20px;
-                    right: 20px;
-                    right: 20px;
-                    right: 20px;
-                    right: 20px;
                 }
             }
         </style>
@@ -719,57 +721,57 @@
                 <div class="player-header">
                     <h1>F先生-播放器</h1>
                 </div>
-                <div class="cover-container">
-                    <div class="default-cover">
+            </div>
+
+            <!-- 播放列表视图 -->
+            <div class="view playlist-view" id="playlist-view">
+                <div class="playlist-header">
+                    <h2>播放列表</h2>
+                    <div class="playlist-actions">
+                        <button class="playlist-action-btn" id="sort-btn">
+                            <i class="fas fa-sort"></i>排序
+                        </button>
+                        <button class="playlist-action-btn delete" id="clear-btn">
+                            <i class="fas fa-trash"></i>清空
+                        </button>
+                        <button class="playlist-action-btn" id="add-music-btn">
+                            <i class="fas fa-plus"></i>添加
+                        </button>
+                    </div>
+                    <div class="sort-options" id="sort-options">
+                        <div class="sort-option" data-sort="title">
+                            <i class="fas fa-font"></i>按标题排序
+                        </div>
+                        <div class="sort-option" data-sort="artist">
+                            <i class="fas fa-user"></i>按艺术家排序
+                        </div>
+                        <div class="sort-option" data-sort="duration">
+                            <i class="fas fa-clock"></i>按时长排序
+                        </div>
+                        <div class="sort-option" data-sort="added">
+                            <i class="fas fa-calendar-plus"></i>按添加时间排序
+                        </div>
+                    </div>
+                    <input type="file" id="file-input" class="file-input" accept="audio/*" multiple>
+                </div>
+
+                <ul class="playlist" id="playlist">
+                    <div class="empty-playlist">
                         <i class="fas fa-music"></i>
+                        <p>暂无歌曲</p>
+                        <button id="add-music-empty-btn"><i class="fas fa-plus"></i> 添加音乐</button>
                     </div>
-                    <img id="cover-image" class="cover-image" alt="专辑封面">
-                </div>
+                </ul>
+            </div>
 
-                <div class="song-info">
-                    <div id="song-title" class="song-title">未选择歌曲</div>
-                    <div id="song-artist" class="song-artist">未知艺术家</div>
+            <!-- 历史记录视图 -->
+            <div class="view history-view" id="history-view">
+                <div class="playlist-header">
+                    <h2>播放历史</h2>
                 </div>
-
-                <div class="progress-container">
-                    <div class="progress-bar" id="progress-bar">
-                        <div class="progress" id="progress"></div>
-                    </div>
-                    <div class="time-display">
-                        <span id="current-time">00:00</span>
-                        <span id="duration">00:00</span>
-                    </div>
-                </div>
-
-                <div class="controls">
-                    <button class="control-btn" id="prev-btn" title="上一曲">
-                        <i class="fas fa-backward"></i>
-                    </button>
-                    <button class="control-btn play-btn" id="play-btn" title="播放">
-                        <i class="fas fa-play"></i>
-                    </button>
-                    <button class="control-btn" id="next-btn" title="下一曲">
-                        <i class="fas fa-forward"></i>
-                    </button>
-                </div>
-
-                <div class="play-mode-container">
-                    <button class="play-mode-btn" id="mode-list" title="列表循环">
-                        <i class="fas fa-list-ul"></i>
-                    </button>
-                    <button class="play-mode-btn" id="mode-repeat" title="单曲循环">
-                        <i class="fas fa-redo"></i>
-                    </button>
-                    <button class="play-mode-btn" id="mode-random" title="随机播放">
-                        <i class="fas fa-random"></i>
-                    </button>
-                </div>
-
-                <div class="volume-container">
-                    <i class="fas fa-volume-up volume-icon"></i>
-                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.01"
-                        value="0.7">
-                </div>
+                <ul class="history-list" id="history-list">
+                    <li class="empty-history">暂无播放历史</li>
+                </ul>
             </div>
         </div>
 
@@ -804,14 +806,6 @@
                 </div>
                 <input type="file" id="file-input" class="file-input" accept="audio/*" multiple>
             </div>
-
-            <ul class="playlist" id="playlist">
-                <div class="empty-playlist">
-                    <i class="fas fa-music"></i>
-                    <p>暂无歌曲</p>
-                    <button id="add-music-empty-btn"><i class="fas fa-plus"></i> 添加音乐</button>
-                </div>
-            </ul>
         </div>
 
         <!-- 历史记录面板 -->
@@ -838,13 +832,12 @@
         </div>
 
         <!-- 确认弹窗 -->
-        <div class="alert" id="confirm">
-            <div class="alert-title" id="confirm-title">确认</div>
-            <div class="alert-message" id="confirm-message">确定要清空播放列表吗？</div>
-            <div style="display: flex; gap: 10px;">
-                <button class="alert-button" id="confirm-cancel"
-                    style="background-color: var(--separator-color);">取消</button>
-                <button class="alert-button" id="confirm-ok">确定</button>
+        <div class="confirm" id="confirm">
+            <div class="confirm-title" id="confirm-title">确认</div>
+            <div class="confirm-message" id="confirm-message">确定要清空播放列表吗？</div>
+            <div class="confirm-buttons">
+                <button class="confirm-button cancel" id="confirm-cancel">取消</button>
+                <button class="confirm-button ok" id="confirm-ok">确定</button>
             </div>
         </div>
 
@@ -875,15 +868,18 @@
             const sortBtn = document.getElementById('sort-btn');
             const sortOptions = document.getElementById('sort-options');
             const clearBtn = document.getElementById('clear-btn');
-            const historyBtn = document.getElementById('history-btn');
-            const historyPanel = document.getElementById('history-panel');
             const historyList = document.getElementById('history-list');
-            const historyClose = document.getElementById('history-close');
 
             // 播放模式按钮
             const modeListBtn = document.getElementById('mode-list');
             const modeRepeatBtn = document.getElementById('mode-repeat');
             const modeRandomBtn = document.getElementById('mode-random');
+
+            // 视图元素
+            const playerView = document.getElementById('player-view');
+            const playlistView = document.getElementById('playlist-view');
+            const historyView = document.getElementById('history-view');
+            const tabs = document.querySelectorAll('.tab');
 
             // 弹窗元素
             const overlay = document.getElementById('overlay');
@@ -930,6 +926,9 @@
 
                 // 渲染播放列表
                 renderPlaylist();
+
+                // 渲染历史记录
+                renderHistory();
             }
 
             // 从本地存储加载播放器状态
@@ -956,7 +955,6 @@
 
                         if (parsedState.history) {
                             playerState.history = parsedState.history;
-                            renderHistory();
                         }
 
                         if (parsedState.sortMethod) {
@@ -1067,20 +1065,18 @@
                     showConfirm('确认', '确定要清空播放列表吗？', clearPlaylist);
                 });
 
-                // 历史记录按钮
-                historyBtn.addEventListener('click', toggleHistoryPanel);
-                historyClose.addEventListener('click', () => {
-                    historyPanel.classList.remove('show');
+                // 底部导航栏切换
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const viewId = tab.dataset.view;
+                        switchView(viewId);
+                    });
                 });
 
-                // 点击其他地方关闭排序选项和历史面板
+                // 点击其他地方关闭排序选项
                 document.addEventListener('click', (e) => {
                     if (!sortBtn.contains(e.target) && !sortOptions.contains(e.target)) {
                         sortOptions.classList.remove('show');
-                    }
-
-                    if (!historyBtn.contains(e.target) && !historyPanel.contains(e.target)) {
-                        historyPanel.classList.remove('show');
                     }
                 });
 
@@ -1118,14 +1114,29 @@
                 window.addEventListener('beforeunload', savePlayerState);
             }
 
-            // 切换排序选项显示
-            function toggleSortOptions() {
-                sortOptions.classList.toggle('show');
+            // 切换视图
+            function switchView(viewId) {
+                // 隐藏所有视图
+                document.querySelectorAll('.view').forEach(view => {
+                    view.classList.remove('active');
+                });
+
+                // 显示选中的视图
+                document.getElementById(viewId).classList.add('active');
+
+                // 更新底部导航栏状态
+                tabs.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.dataset.view === viewId) {
+                        tab.classList.add('active');
+                    }
+                });
             }
 
-            // 切换历史面板显示
-            function toggleHistoryPanel() {
-                historyPanel.classList.toggle('show');
+            // 切换排序选项显示
+            function toggleSortOptions(e) {
+                e.stopPropagation();
+                sortOptions.classList.toggle('show');
             }
 
             // 排序播放列表
@@ -1226,6 +1237,7 @@
 
                         if (songIndex !== -1) {
                             playSong(songIndex);
+                            switchView('player-view');
                         }
                     });
 
@@ -1419,12 +1431,12 @@
             function renderPlaylist() {
                 if (playerState.songs.length === 0) {
                     playlistEl.innerHTML = `
-                <div class="empty-playlist">
-                    <i class="fas fa-music"></i>
-                    <p>暂无歌曲</p>
-                    <button id="add-music-empty-btn"><i class="fas fa-plus"></i> 添加音乐</button>
-                </div>
-            `;
+                    <div class="empty-playlist">
+                        <i class="fas fa-music"></i>
+                        <p>暂无歌曲</p>
+                        <button id="add-music-empty-btn"><i class="fas fa-plus"></i> 添加音乐</button>
+                    </div>
+                `;
                     document.getElementById('add-music-empty-btn').addEventListener('click', () => fileInput.click());
                     return;
                 }
@@ -1434,21 +1446,24 @@
                 playerState.songs.forEach((song, index) => {
                     const li = document.createElement('li');
                     li.className = `playlist-item ${ index === playerState.currentSongIndex ? 'active' : '' }`;
-                    li.addEventListener('click', () => playSong(index));
+                    li.addEventListener('click', () => {
+                        playSong(index);
+                        switchView('player-view');
+                    });
 
                     li.innerHTML = `
-                <div class="playlist-item-cover">
-                    ${ song.cover ? `<img src="${ song.cover }" alt="封面">` : '<i class="fas fa-music"></i>' }
-                </div>
-                <div class="playlist-item-info">
-                    <div class="playlist-item-title">${ song.title }</div>
-                    <div class="playlist-item-artist">${ song.artist }</div>
-                </div>
-                <div class="playlist-item-duration">${ formatTime(song.duration) }</div>
-                <button class="playlist-item-delete" data-index="${ index }" title="删除">
-                    <i class="fas fa-trash"></i>
-                </button>
-            `;
+                    <div class="playlist-item-cover">
+                        ${ song.cover ? `<img src="${ song.cover }" alt="封面">` : '<i class="fas fa-music"></i>' }
+                    </div>
+                    <div class="playlist-item-info">
+                        <div class="playlist-item-title">${ song.title }</div>
+                        <div class="playlist-item-artist">${ song.artist }</div>
+                    </div>
+                    <div class="playlist-item-duration">${ formatTime(song.duration) }</div>
+                    <button class="playlist-item-delete" data-index="${ index }" title="删除">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
 
                     playlistEl.appendChild(li);
                 });
