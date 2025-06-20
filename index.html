@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>F音乐播放器</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
         <style>
             /* 样式保持不变，仅调整类名命名风格 */
             * {
@@ -32,7 +31,6 @@
 
             .mainCont {
                 flex: 1;
-
             }
 
             .tabPlayer,
@@ -459,7 +457,6 @@
             }
 
             @keyframes fadeInOut {
-
                 0%,
                 100% {
                     opacity: 0;
@@ -631,8 +628,11 @@
                     <div class="hdrPlayer">F音乐播放器</div>
                     <div class="cntAlbumArt">
                         <div class="boxAlbumArt" id="boxAlbumArt">
-                            <img src="https://picsum.photos/400/400" alt="Album Art" class="imgAlbumArt"
-                                id="imgAlbumArt">
+                            <img
+                                src="https://picsum.photos/400/400"
+                                alt="Album Art"
+                                class="imgAlbumArt"
+                                id="imgAlbumArt" />
                         </div>
                     </div>
                     <div class="infoSong">
@@ -671,40 +671,49 @@
 
                 <div class="cntVolume">
                     <i class="fas fa-volume-up icoVolume"></i>
-                    <input type="range" class="sldVolume" id="sldVolume" min="0" max="1" step="0.01" value="1">
+                    <input type="range" class="sldVolume" id="sldVolume" min="0" max="1" step="0.01" value="1" />
                 </div>
             </div>
 
             <!-- 播放列表标签页 -->
-            <div class="tabPlayList" id="tabPlayList" style="display: none;">
+            <div class="tabPlayList" id="tabPlayList" style="display: none">
                 <div class="listPlay" id="listPlay">
                     <div class="msgEmpty">暂无歌曲，请先添加音乐源</div>
                 </div>
             </div>
 
             <!-- 音乐源标签页 -->
-            <div class="tabSource" id="tabSource" style="display: none;">
+            <div class="tabSource" id="tabSource" style="display: none">
                 <div class="cntSource">
                     <div class="secSource">
                         <div class="hdrSource">从API获取音乐</div>
                         <div class="grpInput">
-                            <input type="text" class="inpUrl" id="inpApiUrl"
-                                placeholder="输入API地址 (例如: http://localhost:3000/api/songs)">
+                            <input
+                                type="text"
+                                class="inpUrl"
+                                id="inpApiUrl"
+                                placeholder="输入API地址 (例如: http://localhost:3000/api/songs)" />
                         </div>
                         <button class="btnMain" id="btnFetchApi">
                             <span id="txtFetchApi">获取歌曲</span>
-                            <span id="spnFetchLoad" class="aniLoading" style="display: none;"></span>
+                            <span id="spnFetchLoad" class="aniLoading" style="display: none"></span>
                         </button>
                         <div class="txtInfo">API应返回包含title, artist, src, cover, duration字段的JSON数组</div>
                     </div>
 
                     <div class="secSource">
                         <div class="hdrSource">从本地文件夹获取</div>
-                        <input type="file" id="inpFile" webkitdirectory directory multiple class="inpFile"
-                            accept="audio/*">
+                        <input
+                            type="file"
+                            id="inpFile"
+                            webkitdirectory
+                            directory
+                            multiple
+                            class="inpFile"
+                            accept="audio/*" />
                         <button class="btnMain" id="btnSelFolder">
                             <span id="txtSelFolder">选择文件夹</span>
-                            <span id="spnSelLoad" class="aniLoading" style="display: none;"></span>
+                            <span id="spnSelLoad" class="aniLoading" style="display: none"></span>
                         </button>
                         <div class="txtInfo">支持MP3、WAV、OGG等音频文件，将自动解析元数据获取歌曲信息</div>
                     </div>
@@ -722,21 +731,27 @@
         <!-- 底部标签栏 -->
         <div class="barTab">
             <div class="itemTab active" data-tab="tabPlayer">
-                <div class="icoTab"><i class="fas fa-music"></i></div>
+                <div class="icoTab">
+                    <i class="fas fa-music"></i>
+                </div>
                 <div>播放器</div>
             </div>
             <div class="itemTab" data-tab="tabPlayList">
-                <div class="icoTab"><i class="fas fa-list"></i></div>
+                <div class="icoTab">
+                    <i class="fas fa-list"></i>
+                </div>
                 <div>播放列表</div>
             </div>
             <div class="itemTab" data-tab="tabSource">
-                <div class="icoTab"><i class="fas fa-database"></i></div>
+                <div class="icoTab">
+                    <i class="fas fa-database"></i>
+                </div>
                 <div>音乐源</div>
             </div>
         </div>
 
         <!-- 权限请求对话框 -->
-        <div class="dlgPermReq" id="dlgPermReq" style="display: none;">
+        <div class="dlgPermReq" id="dlgPermReq" style="display: none">
             <div class="boxPerm">
                 <div class="hdrPerm">文件访问权限</div>
                 <div class="txtPerm">
@@ -753,7 +768,7 @@
         <div class="msgNotify" id="msgNotify"></div>
 
         <!-- 定时设置弹窗 -->
-        <div class="dlgTimer" id="dlgTimer" style="display: none;">
+        <div class="dlgTimer" id="dlgTimer" style="display: none">
             <div class="cntTimer">
                 <h3 class="hdrTimer">设置定时关闭</h3>
                 <div class="optTimer">
@@ -764,8 +779,8 @@
                     <button class="btnTimerOpt" data-time="60">1小时</button>
                     <button class="btnTimerOpt" data-time="custom">自定义...</button>
                 </div>
-                <div class="grpTimerCust" style="display: none;">
-                    <input type="number" id="inpCustTime" min="1" max="1440" placeholder="分钟">
+                <div class="grpTimerCust" style="display: none">
+                    <input type="number" id="inpCustTime" min="1" max="1440" placeholder="分钟" />
                     <button id="btnConfCust">确定</button>
                 </div>
                 <button class="btnTimerCancel" id="btnCancelTimer">取消</button>
@@ -810,7 +825,7 @@
                     notificationBox: document.getElementById('msgNotify'),
                     timerDialog: document.getElementById('dlgTimer'),
                     playlistContainer: document.getElementById('listPlay'),
-                    historyContainer: document.getElementById('listHist')
+                    historyContainer: document.getElementById('listHist'),
                 };
 
                 // 显示通知
@@ -850,7 +865,7 @@
                     domElements.volumeSlider.addEventListener('input', adjustVolumeLevel);
 
                     // 标签切换事件
-                    document.querySelectorAll('.itemTab').forEach(tabItem => {
+                    document.querySelectorAll('.itemTab').forEach((tabItem) => {
                         tabItem.addEventListener('click', function () {
                             const targetTabId = this.getAttribute('data-tab');
                             switchTabContent(targetTabId);
@@ -858,7 +873,7 @@
                     });
 
                     // 定时器选项事件
-                    document.querySelectorAll('.btnTimerOpt').forEach(option => {
+                    document.querySelectorAll('.btnTimerOpt').forEach((option) => {
                         option.addEventListener('click', function () {
                             const timeValue = this.dataset.time;
                             if (timeValue === 'custom') {
@@ -926,7 +941,7 @@
                 // 切换标签内容显示
                 function switchTabContent(tabId) {
                     // 隐藏所有标签页
-                    document.querySelectorAll('.mainCont > div').forEach(container => {
+                    document.querySelectorAll('.mainCont > div').forEach((container) => {
                         container.style.display = 'none';
                     });
 
@@ -934,7 +949,7 @@
                     document.getElementById(tabId).style.display = 'flex';
 
                     // 更新标签激活状态
-                    document.querySelectorAll('.itemTab').forEach(tabItem => {
+                    document.querySelectorAll('.itemTab').forEach((tabItem) => {
                         tabItem.classList.remove('active');
                         if (tabItem.getAttribute('data-tab') === tabId) {
                             tabItem.classList.add('active');
@@ -965,14 +980,17 @@
                         loadCurrentSong(songList[currentSongIndex]);
                     }
 
-                    audio.play().then(() => {
-                        isPlaying = true;
-                        domElements.playIcon.classList.replace('fa-play', 'fa-pause');
-                        domElements.albumContainer.classList.add('playing');
-                        addToPlayHistory(songList[currentSongIndex]);
-                    }).catch(error => {
-                        showNotification('播放失败: ' + error.message);
-                    });
+                    audio
+                        .play()
+                        .then(() => {
+                            isPlaying = true;
+                            domElements.playIcon.classList.replace('fa-play', 'fa-pause');
+                            domElements.albumContainer.classList.add('playing');
+                            addToPlayHistory(songList[currentSongIndex]);
+                        })
+                        .catch((error) => {
+                            showNotification('播放失败: ' + error.message);
+                        });
                 }
 
                 // 暂停播放
@@ -1033,10 +1051,10 @@
                     const currentIndex = modes.indexOf(playMode);
                     playMode = modes[(currentIndex + 1) % modes.length];
 
-                    domElements.modeIcon.className = `fas ${ modeIcons[(currentIndex + 1) % modes.length] }`;
+                    domElements.modeIcon.className = `fas ${modeIcons[(currentIndex + 1) % modes.length]}`;
                     domElements.modeButton.title = modeTitles[(currentIndex + 1) % modes.length];
 
-                    showNotification(`已切换至${ modeTitles[(currentIndex + 1) % modes.length] }模式`);
+                    showNotification(`已切换至${modeTitles[(currentIndex + 1) % modes.length]}模式`);
                     savePlayerState();
                 }
 
@@ -1061,7 +1079,7 @@
                         timerId = null;
                     }, seconds * 1000);
 
-                    showNotification(`已设置${ minutes }分钟后关闭`);
+                    showNotification(`已设置${minutes}分钟后关闭`);
                     domElements.timerDialog.style.display = 'none';
                     document.querySelector('.grpTimerCust').style.display = 'none';
                 }
@@ -1080,7 +1098,7 @@
                 // 更新进度显示
                 function updateProgressDisplay() {
                     const progressPercentage = (audio.currentTime / audio.duration) * 100;
-                    domElements.progressBar.style.width = `${ progressPercentage }%`;
+                    domElements.progressBar.style.width = `${progressPercentage}%`;
                     domElements.currentTimeDisplay.textContent = formatTime(audio.currentTime);
                 }
 
@@ -1110,7 +1128,7 @@
 
                     const minutes = Math.floor(seconds / 60);
                     const remainingSeconds = Math.floor(seconds % 60);
-                    return `${ minutes }:${ remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds }`;
+                    return `${minutes}:${remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds}`;
                 }
 
                 // 渲染播放列表
@@ -1126,15 +1144,15 @@
 
                     songList.forEach((song, index) => {
                         const listItem = document.createElement('div');
-                        listItem.className = `itemPlay ${ index === currentSongIndex ? 'active' : '' }`;
+                        listItem.className = `itemPlay ${index === currentSongIndex ? 'active' : ''}`;
                         listItem.dataset.index = index;
 
                         listItem.innerHTML = `
-                                    <div class="infoPlayItem">
-                                        <div class="txtPlayTitle">${ song.title }</div>
-                                        <div class="txtPlayArtist">${ song.artist }</div>
-                                    </div>
-                                    <div class="txtPlayDur">${ formatTime(song.duration || 0) }</div>
+                 <div class="infoPlayItem">
+                         <div class="txtPlayTitle">${song.title}</div>
+                                        <div class="txtPlayArtist">${song.artist}</div>
+                            </div>
+                                    <div class="txtPlayDur">${formatTime(song.duration || 0)}</div>
                                 `;
 
                         listItem.addEventListener('click', () => {
@@ -1157,7 +1175,7 @@
                     // 添加到历史记录开头
                     playHistory.unshift({
                         ...song,
-                        timestamp: new Date().toLocaleTimeString()
+                        timestamp: new Date().toLocaleTimeString(),
                     });
 
                     // 限制历史记录数量
@@ -1185,16 +1203,19 @@
                         historyItem.className = 'itemHist';
 
                         historyItem.innerHTML = `
-                                    <div class="infoHist">
-                                        <div class="txtHistTitle">${ item.title }</div>
-                                        <div class="txtHistArtist">${ item.artist }</div>
-                                    </div>
-                                    <div class="txtHistTime">${ item.timestamp }</div>
+                            <div class="infoHist">
+                         <div class="txtHistTitle">${item.title}</div>
+                                       
+                         
+                         <div class="txtHistArtist">${item.artist}</div>
+                                    
+                         </div>
+                                    <div class="txtHistTime">${item.timestamp}</div>
                                 `;
 
                         historyItem.addEventListener('click', () => {
                             // 在播放列表中查找歌曲
-                            const songIndex = songList.findIndex(song => song.src === item.src);
+                            const songIndex = songList.findIndex((song) => song.src === item.src);
                             if (songIndex !== -1) {
                                 currentSongIndex = songIndex;
                                 loadCurrentSong(songList[songIndex]);
@@ -1221,13 +1242,13 @@
 
                             // 恢复模式图标
                             const modeIconMap = {
-                                'normal': 'fa-exchange-alt',
-                                'random': 'fa-random',
-                                'loop': 'fa-redo'
+                                normal: 'fa-exchange-alt',
+                                random: 'fa-random',
+                                loop: 'fa-redo',
                             };
 
                             if (modeIconMap[playMode]) {
-                                domElements.modeIcon.className = `fas ${ modeIconMap[playMode] }`;
+                                domElements.modeIcon.className = `fas ${modeIconMap[playMode]}`;
                             }
 
                             // 加载当前歌曲
@@ -1249,7 +1270,7 @@
                         songs: songList,
                         currentSongIndex: currentSongIndex,
                         playMode: playMode,
-                        playHistory: playHistory
+                        playHistory: playHistory,
                     };
 
                     localStorage.setItem('musicPlayerState', JSON.stringify(state));
@@ -1280,7 +1301,7 @@
 
                         const response = await fetch(apiUrl);
                         if (!response.ok) {
-                            throw new Error(`HTTP错误! 状态码: ${ response.status }`);
+                            throw new Error(`HTTP错误! 状态码: ${response.status}`);
                         }
 
                         const newSongs = await response.json();
@@ -1295,7 +1316,7 @@
                         }
 
                         renderPlaylist();
-                        showNotification(`成功添加${ newSongs.length }首歌曲`);
+                        showNotification(`成功添加${newSongs.length}首歌曲`);
                         savePlayerState();
                     } catch (error) {
                         showNotification('获取歌曲失败: ' + error.message);
@@ -1308,7 +1329,7 @@
                 // 处理文件选择
                 async function handleFileSelection(event) {
                     const selectedFiles = Array.from(event.target.files);
-                    const audioFiles = selectedFiles.filter(file => file.type.startsWith('audio/'));
+                    const audioFiles = selectedFiles.filter((file) => file.type.startsWith('audio/'));
 
                     if (audioFiles.length === 0) {
                         showNotification('未选择音频文件');
@@ -1336,7 +1357,7 @@
                         }
 
                         renderPlaylist();
-                        showNotification(`成功添加${ newSongs.length }首歌曲`);
+                        showNotification(`成功添加${newSongs.length}首歌曲`);
                         savePlayerState();
 
                         // 请求权限
@@ -1358,46 +1379,44 @@
                         const fileUrl = URL.createObjectURL(file);
 
                         // 使用jsmediatags解析元数据
-                        new jsmediatags.Reader(file)
-                            .setTagsToRead(['title', 'artist', 'picture'])
-                            .read({
-                                onSuccess: function (tag) {
-                                    const tags = tag.tags;
-                                    const title = tags.title || file.name.replace(/\.[^/.]+$/, "");
-                                    const artist = tags.artist || '未知艺术家';
+                        new jsmediatags.Reader(file).setTagsToRead(['title', 'artist', 'picture']).read({
+                            onSuccess: function (tag) {
+                                const tags = tag.tags;
+                                const title = tags.title || file.name.replace(/\.[^/.]+$/, '');
+                                const artist = tags.artist || '未知艺术家';
 
-                                    // 处理专辑封面
-                                    let coverUrl = 'https://picsum.photos/400/400';
-                                    if (tags.picture) {
-                                        try {
-                                            const base64Data = bufferToBase64(tags.picture.data);
-                                            coverUrl = `data:${ tags.picture.format };base64,${ base64Data }`;
-                                        } catch (error) {
-                                            console.error('解析封面失败', error);
-                                        }
+                                // 处理专辑封面
+                                let coverUrl = 'https://picsum.photos/400/400';
+                                if (tags.picture) {
+                                    try {
+                                        const base64Data = bufferToBase64(tags.picture.data);
+                                        coverUrl = `data:${tags.picture.format};base64,${base64Data}`;
+                                    } catch (error) {
+                                        console.error('解析封面失败', error);
                                     }
-
-                                    resolve({
-                                        title: title,
-                                        artist: artist,
-                                        src: fileUrl,
-                                        cover: coverUrl,
-                                        file: file,
-                                        duration: 0 // 后续通过音频元素获取
-                                    });
-                                },
-                                onError: function (error) {
-                                    console.error('读取标签失败', error);
-                                    resolve({
-                                        title: file.name.replace(/\.[^/.]+$/, ""),
-                                        artist: '未知艺术家',
-                                        src: fileUrl,
-                                        cover: 'https://picsum.photos/400/400',
-                                        file: file,
-                                        duration: 0
-                                    });
                                 }
-                            });
+
+                                resolve({
+                                    title: title,
+                                    artist: artist,
+                                    src: fileUrl,
+                                    cover: coverUrl,
+                                    file: file,
+                                    duration: 0, // 后续通过音频元素获取
+                                });
+                            },
+                            onError: function (error) {
+                                console.error('读取标签失败', error);
+                                resolve({
+                                    title: file.name.replace(/\.[^/.]+$/, ''),
+                                    artist: '未知艺术家',
+                                    src: fileUrl,
+                                    cover: 'https://picsum.photos/400/400',
+                                    file: file,
+                                    duration: 0,
+                                });
+                            },
+                        });
                     });
                 }
 
@@ -1421,22 +1440,22 @@
                             artist: '示例艺术家',
                             src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
                             cover: 'https://picsum.photos/400/400?random=1',
-                            duration: 217
+                            duration: 217,
                         },
                         {
                             title: '示例歌曲 2',
                             artist: '示例艺术家',
                             src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
                             cover: 'https://picsum.photos/400/400?random=2',
-                            duration: 191
+                            duration: 191,
                         },
                         {
                             title: '示例歌曲 3',
                             artist: '示例艺术家',
                             src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
                             cover: 'https://picsum.photos/400/400?random=3',
-                            duration: 210
-                        }
+                            duration: 210,
+                        },
                     ];
 
                     songList = sampleSongs;
@@ -1446,7 +1465,7 @@
 
                 // 公开API
                 return {
-                    init: initializePlayer
+                    init: initializePlayer,
                 };
             })();
 
@@ -1456,5 +1475,4 @@
             });
         </script>
     </body>
-
 </html>
